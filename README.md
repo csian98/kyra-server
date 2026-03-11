@@ -81,7 +81,7 @@
 ![last commit][last-commit-shield]
 [![MIT License][license-shield]][license-url]
 
-![Screen Shot](images/screenshot.png)
+![Kyra Server Screen Shot](images/screenshot.png)
 
 Kyra is a C/C++ based Local AI Agent system developed by Jeong Hoon Choi for personal use.
 It can optionally control input and output using TTS, LLM, and STT processes, and is available on the network using a WebSocket client.
@@ -89,11 +89,16 @@ LLM is implemented to use MCPServer, which allows for the extension of the LLM m
 
 ### Kyra-Clients
 The Currently implemented Clients are as follows:
-- Kyra-Client for Emacs
+
+* Kyra-Client for Emacs
+
 ![Emacs Client](images/kyra-client-emacs.png)
-- Kyra-Client for Qt App (implement for mac)
+
+* Kyra-Client for Qt App (implement for mac)
+
 ![App Client](images/kyra-client-app.png)
-- Kyra-Client for Raspberry Pi (Voice Control Only)
+
+* Kyra-Client for Raspberry Pi (Voice Control Only)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -112,12 +117,12 @@ Project Link: [https://github.com/csian98/sian](https://github.com/csian98/sian)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-[language-shield]: https://img.shields.io/github/languages/top/csian98/sian.svg?style=for-the-badge
-[code-size-shield]: https://img.shields.io/github/languages/code-size/csian98/sian.svg?style=for-the-badge
-[repo-size-shield]: https://img.shields.io/github/repo-size/csian98/sian.svg?style=for-the-badge
-[commit-activity-shield]: https://img.shields.io/github/commit-activity/w/csian98/sian.svg?style=for-the-badge
-[last-commit-shield]: https://img.shields.io/github/last-commit/csian98/sian.svg?style=for-the-badge
-[license-shield]: https://img.shields.io/github/license/csian98/sian.svg?style=for-the-badge
+[language-shield]: https://img.shields.io/github/languages/top/csian98/kyra-server.svg?style=for-the-badge
+[code-size-shield]: https://img.shields.io/github/languages/code-size/csian98/kyra-server.svg?style=for-the-badge
+[repo-size-shield]: https://img.shields.io/github/repo-size/csian98/kyra-server.svg?style=for-the-badge
+[commit-activity-shield]: https://img.shields.io/github/commit-activity/w/csian98/kyra-server.svg?style=for-the-badge
+[last-commit-shield]: https://img.shields.io/github/last-commit/csian98/kyra-server.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/csian98/kyra-server.svg?style=for-the-badge
 [license-url]: https://github.com/csian98/kyra-server/blob/main/LICENSE
 
 [macos-shield]: https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=macos&logoColor=F0F0F0
