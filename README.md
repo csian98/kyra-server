@@ -86,6 +86,7 @@
 Kyra is a C/C++ based Local AI Agent system developed by Jeong Hoon Choi for personal use.
 It can optionally control input and output using TTS, LLM, and STT processes, and is available on the network using a WebSocket client.
 LLM is implemented to use MCPServer, which allows for the extension of the LLM model's tools.
+Currently, input supports Audio, Text (both included image), and output supports Audio, Text.
 
 ### Kyra-Clients
 The Currently implemented Clients are as follows:
