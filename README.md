@@ -145,7 +145,7 @@ Voice-only interface for physical interaction.
 
 ### Built With
 * [![ollama][ollama-shield]][ollama-url]
-* [![huggingface][hugging-face-shield]][huggingface-url]
+* [![huggingface][huggingface-shield]][huggingface-url]
 * [![qt][qt-shield]][qt-url]
 * [![blender][blender-shield]][blender-url]
 
