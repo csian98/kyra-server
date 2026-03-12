@@ -35,44 +35,6 @@
 	</p>
 </div>
 
-<details>
-	<summary>Table of Contents</summary>
-	<ol>
-		<li>
-			<a href="#about-the-project">About The Project</a>
-			<ul>
-				<li><a href="#development-environment">Development Environment</a>
-			</ul>
-			<ul>
-				<li><a href="#built-with">Built With</a></li>
-			</ul>
-		</li>
-		<li>
-			<a href="#getting-started">Getting Started</a>
-			<ul>
-				<li>
-					<a href="#prerequisites">Prerequisites</a>
-				</li>
-				<li>
-					<a href="#installation">Installation</a>
-				</li>
-			</ul>
-		</li>
-		<li>
-			<a href="#usage">Usage</a>
-		</li>
-		<li>
-			<a href="#roadmap">Roadmap</a>
-		</li>
-		<li>
-			<a href="#license">License</a>
-		</li>
-		<li>
-			<a href="#contact">Contact</a>
-		</li>
-  </ol>
-</details>
-
 ## About The Project
 
 ![Language][language-shield]
@@ -84,24 +46,108 @@
 ![Kyra Server Screen Shot](images/screenshot.png)
 
 Kyra is a C/C++ based Local AI Agent system developed by Jeong Hoon Choi for personal use.
-It can optionally control input and output using TTS, LLM, and STT processes, and is available on the network using a WebSocket client.
-LLM is implemented to use MCPServer, which allows for the extension of the LLM model's tools.
-Currently, input supports Audio, Text (both included image), and output supports Audio, Text.
+
+Kyra is designed to operate entirely on a self-hosted environment, allowing local LLM inference, speech processing, and extensible tool usage through the Model Context Protocol (MCP).
+
+The system communicaties with clients through WebSocket Secure (WSS) and uses Bearer Token authentication for secure access.
+
+Kyra supports multiple input and output modalities:
+
+Input:
+* TEXT
+* AUDIO (STT)
+* IMAGE (Optional)
+
+Output:
+* TEXT
+* AUDIO (TTS)
+
+### Default AI Stack
+
+Kyra is designed to run using fully local AI components by default.
+
+| Component | Purpose                 |
+|-----------|-------------------------|
+| Ollama    | Local LLM Inference     |
+| Whisper   | Speech-To-Text          |
+| Piper     | Text-To-Speech          |
+| Qdrant    | Long-Term vector memory |
+
+### Required Services
+
+The following services must be running for Kyra to operate correctly.
+
+#### Ollama (LLM)
+
+Default endpoint:
+
+``` text
+http://localhost:11434
+```
+
+Ollama runs a local HTTP server which Kyra uses for LLM inference.
+Internally, a total of three models are used by default.
+
+| Model    | Purpose                                                   |
+|----------|-----------------------------------------------------------|
+| kyra     | Model for basic generate, chat, and tool using            |
+| kyra-vl  | Model including OCR and image processing capabilities     |
+| kyra-emb | Small model for compression to manage coversation context |
+
+#### Qdrant (Vector Database)
+
+Default endpoint:
+
+``` text
+http://localhost:6333
+```
+
+### MCP Servers
+
+Kyra integrates with multiple MCP servers to extend the capabilities of the LLM.
+
+The following servers are included by default:
+| MCP Server                          | Purpose              |
+|-------------------------------------|----------------------|
+| time                                | time utilities       |
+| mem0 + Qdrant (customize for local) | long-term memory     |
+| memory (knowledge-graph)            | long-term memory     |
+| Brave Search                        | web search           |
+| CalDAV                              | calendar integration |
+
+Configuration is defined in:
+
+```
+etc/mcp-server/config.json
+```
 
 ### Kyra-Clients
-The Currently implemented Clients are as follows:
+Currently implemented clients:
 
-* Kyra-Client for Emacs
 
-![Emacs Client](images/kyra-client-emacs.png)
+#### Kyra-Client for Emacs
+<img src="images/kyra-client-emacs.png">
 
-* Kyra-Client for Qt App (implement for mac)
+#### Kyra-Client for Qt App (implement for mac)
+<img src="images/kyra-client-app.png">
 
-![App Client](images/kyra-client-app.png)
-
-* Kyra-Client for Raspberry Pi (Voice Control Only)
+#### Kyra-Client for Raspberry Pi
+Voice-only interface for physical interaction.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Development Environment
+* [![macOS][macos-shield]][macos-url]
+* [![Arch Linux][archlinux-shield]][archlinux-url]
+* [![cpp][cpp-shield]][cpp-url]
+* [![python][python-shield]][python-url]
+* [![Nvidia Cuda][cuda-shield]][cuda-url]
+
+### Built With
+* [![ollama][ollama-shield]][ollama-url]
+* [![huggingface][hugging-face-shield]][huggingface-url]
+* [![qt][qt-shield]][qt-url]
+* [![blender][blender-shield]][blender-url]
 
 ## 🔐 License
 
@@ -114,7 +160,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Jeong Hoon (Sian) Choi - [@csian98](https://instagram.com/csian98) - [csian7386@gmail.com](mailto:csian7386@gmail.com)
 
-Project Link: [https://github.com/csian98/sian](https://github.com/csian98/sian)
+Project Link: [https://github.com/csian98/sian](https://github.com/csian98/kyra-server)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -133,22 +179,20 @@ Project Link: [https://github.com/csian98/sian](https://github.com/csian98/sian)
 [cuda-shield]: https://img.shields.io/badge/NVIDIA%20CUDA-RTX4060-76B900?style=for-the-badge&logo=nvidia&logoColor=white
 [cuda-url]: https://docs.nvidia.com/cuda/cuda-c-programming-guide/
 
-[sqlite-shield]: https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white
-[mariadb-shield]: https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white
-[mariadb-url]: https://mariadb.com/docs/server/connect/
-[mongodb-shield]: https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white
-[slack-shield]: https://img.shields.io/badge/Slack%20API-4A154B?style=for-the-badge&logo=slack&logoColor=white
-[slack-url]: https://api.slack.com
-[openai-shield]: https://img.shields.io/badge/openAI%20API-74aa9c?style=for-the-badge&logo=openai&logoColor=white
-[openai-url]: https://platform.openai.com/docs/api-reference
-
 [openssl-shield]: https://img.shields.io/badge/OpenSSL-721412?style=for-the-badge&logo=OpenSSL
 [openssl-url]: https://www.openssl.org
 [curl-shield]: https://img.shields.io/badge/curl-073551?style=for-the-badge&logo=curl
 [curl-url]: https://curl.se
-
-[hadoop-shield]: https://img.shields.io/badge/Apache%20Hadoop-66CCFF?style=for-the-badge&logo=apachehadoop&logoColor=black
-[tensorflow-shield]: https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white
+[ollama-shield]: https://img.shields.io/badge/ollama-%23000000.svg?style=for-the-badge&logo=ollama&logoColor=white
+[ollama-url]:https://ollama.com
+[huggingface-shield]: https://img.shields.io/badge/huggingface-%23FFD21E.svg?style=for-the-badge&logo=huggingface&logoColor=white
+[huggingface-url]:https://huggingface.co
+[qt-shield]: https://img.shields.io/badge/Qt-%23217346.svg?style=for-the-badge&logo=Qt&logoColor=white
+[qt-url]: https://www.qt.io/development/qt-framework/qt6
+[emacs-shield]: https://img.shields.io/badge/Emacs-%237F5AB6.svg?&style=for-the-badge&logo=gnu-emacs&logoColor=white
+[emacs-url]: https://www.gnu.org/software/emacs/
+[blender-shield]: https://img.shields.io/badge/blender-%23F5792A.svg?style=for-the-badge&logo=blender&logoColor=white
+[blender-url]: https://www.blender.org
 
 [c-shield]: https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white
 [cpp-shield]: https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white
@@ -156,6 +200,3 @@ Project Link: [https://github.com/csian98/sian](https://github.com/csian98/sian)
 [elisp-shield]: https://img.shields.io/badge/Emacs%20Lisp-%237F5AB6.svg?&style=for-the-badge&logo=gnu-emacs&logoColor=white
 [r-shield]: https://img.shields.io/badge/R-276DC3?style=for-the-badge&logo=r&logoColor=white
 [shell-shield]: https://img.shields.io/badge/Shell_Script-121011?style=for-the-badge&logo=gnu-bash&logoColor=white
-
-[keras-shield]: https://img.shields.io/badge/Keras-%23D00000.svg?style=for-the-badge&logo=Keras&logoColor=white
-[pytorch-shield]: https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white
