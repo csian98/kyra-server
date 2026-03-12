@@ -184,9 +184,9 @@ Project Link: [https://github.com/csian98/sian](https://github.com/csian98/kyra-
 [curl-shield]: https://img.shields.io/badge/curl-073551?style=for-the-badge&logo=curl
 [curl-url]: https://curl.se
 [ollama-shield]: https://img.shields.io/badge/ollama-%23000000.svg?style=for-the-badge&logo=ollama&logoColor=white
-[ollama-url]:https://ollama.com
+[ollama-url]: https://ollama.com
 [huggingface-shield]: https://img.shields.io/badge/huggingface-%23FFD21E.svg?style=for-the-badge&logo=huggingface&logoColor=white
-[huggingface-url]:https://huggingface.co
+[huggingface-url]: https://huggingface.co
 [qt-shield]: https://img.shields.io/badge/Qt-%23217346.svg?style=for-the-badge&logo=Qt&logoColor=white
 [qt-url]: https://www.qt.io/development/qt-framework/qt6
 [emacs-shield]: https://img.shields.io/badge/Emacs-%237F5AB6.svg?&style=for-the-badge&logo=gnu-emacs&logoColor=white
@@ -196,7 +196,9 @@ Project Link: [https://github.com/csian98/sian](https://github.com/csian98/kyra-
 
 [c-shield]: https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white
 [cpp-shield]: https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white
+[cpp-url]: https://www.boost.org
 [python-shield]: https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue
+[python-url]: https://www.python.org
 [elisp-shield]: https://img.shields.io/badge/Emacs%20Lisp-%237F5AB6.svg?&style=for-the-badge&logo=gnu-emacs&logoColor=white
 [r-shield]: https://img.shields.io/badge/R-276DC3?style=for-the-badge&logo=r&logoColor=white
 [shell-shield]: https://img.shields.io/badge/Shell_Script-121011?style=for-the-badge&logo=gnu-bash&logoColor=white
