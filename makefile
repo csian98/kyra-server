@@ -1,6 +1,8 @@
 # ENV
 EXEC_TARGET := main
 EXEC_SRC := main.cpp
+ADMIN_TARGET := kyra-admin-console
+ADMIN_SRC := admin/src/kyra-admin-console.cpp
 LIB_TARGET := libkyra.a
 CC := clang
 CXX := c++
@@ -32,7 +34,8 @@ CFLAGS := $(INC_FLAGS) -MMD -MP
 CXXFLAGS := -std=c++20 $(INC_FLAGS) -MMD -MP
 #SHD_CXXFLAGS := -std=c++20 $(INC_FLAGS) -MMD -MP -fPIC
 NVCCFLAGS := $(INC_FLAGS)
-LDFLAGS := -L./lib -L/usr/lib -lkyra -lcurl -lssl -lcrypto -lonnxruntime -lespeak-ng -lwhisper
+LDFLAGS := -L./lib -L/usr/lib -lkyra -lcurl -lssl -lcrypto -lmariadbcpp -lonnxruntime -lespeak-ng -lwhisper
+ADMIN_LDFLAGS := -L./lib -L/usr/lib -lkyra -lssl -lcrypto -lmariadbcpp
 ARFLAGS := crs
 #SHD_LDFLAGS := -shared
 
@@ -63,6 +66,10 @@ exec: $(LIB_DIR)/$(LIB_TARGET)
 exec_debug: $(LIB_DIR)/$(LIB_TARGT)
 	$(CXX) -o $(EXEC_TARGET) $(EXEC_SRC) $(CXXFLAGS) $(LDFLAGS) -g
 	rm -r $(EXEC_TARGET).d #$(EXEC_TARGET).dSYM
+
+system: $(LIB_DIR)/$(LIB_TARGET)
+	$(CXX) -o $(ADMIN_TARGET) $(ADMIN_SRC) $(CXXFLAGS) $(ADMIN_LDFLAGS)
+	rm -f $(ADMIN_TARGET).d
 
 clean:
 	rm -r $(BUILD_DIR)/*

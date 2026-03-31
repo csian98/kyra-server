@@ -72,6 +72,7 @@ Kyra is designed to run using fully local AI components by default.
 | Whisper   | Speech-To-Text          |
 | Piper     | Text-To-Speech          |
 | Qdrant    | Long-Term vector memory |
+| MaraiDB   | SYSTEM                  |
 
 ### Required Services
 
@@ -148,6 +149,7 @@ Voice-only interface for physical interaction.
 * [![huggingface][huggingface-shield]][huggingface-url]
 * [![qt][qt-shield]][qt-url]
 * [![blender][blender-shield]][blender-url]
+* [![mariadb][mariadb-shield]][mariadb-url]
 
 ## 🔐 License
 
@@ -193,6 +195,8 @@ Project Link: [https://github.com/csian98/sian](https://github.com/csian98/kyra-
 [emacs-url]: https://www.gnu.org/software/emacs/
 [blender-shield]: https://img.shields.io/badge/blender-%23F5792A.svg?style=for-the-badge&logo=blender&logoColor=white
 [blender-url]: https://www.blender.org
+[mariadb-shield]: https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white
+[mariadb-url]: https://mariadb.com/docs/server/connect/
 
 [c-shield]: https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white
 [cpp-shield]: https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white
