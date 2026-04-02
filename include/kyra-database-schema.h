@@ -114,24 +114,6 @@ namespace kyra {
 
 		std::string created_at;
 	};
-
-	struct ToolCallHistorySchema {
-		uint64_t id;
-
-		uint64_t chat_id;
-
-		std::string tool_name;
-
-		std::string tool_input;
-
-		std::string tool_output;
-
-		std::string status;
-
-		uint32_t duration_ms;
-
-		std::string created_at;
-	};
 }
 
 /* Functions declaration */

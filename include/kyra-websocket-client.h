@@ -57,50 +57,47 @@ extern "C" {
 
 namespace kyra {
 	namespace asio = boost::asio;
-	
 	namespace ssl = asio::ssl;
-	
 	namespace beast = boost::beast;
-	
+	namespace http = beast::http;
 	namespace websocket = beast::websocket;
 
 	using tcp = asio::ip::tcp;
+	using json = nlohmann::json;
 	
 	class WebSocketClient {
 	public:
 		explicit WebSocketClient(const std::string& host,
-								 const std::string& port);
-		
+								 const std::string& port,
+								 const std::string& token);
+
 		virtual ~WebSocketClient(void) noexcept = default;
 
 		void connect(void);
 
 		void disconnect(void);
 
-		void send_text(const std::string& text,
-					   InputOutputFormat output_format = InputOutputFormat::TEXT,
-					   const std::string& model = "kyra");
+		void send_text(
+			const std::string& text,
+			InputOutputFormat output_foramat = InputOutputFormat::TEXT,
+			const std::string& model = "kyra");
 
-		void send_audio(const std::vector<uint8_t>& audio,
-						InputOutputFormat output_format = InputOutputFormat::AUDIO,
-						const std::string& model = "kyra");
+		std::optional<json> read_response(void);
 		
 	private:
-		void send(Request request);
-		
-		void read_work(void);
+		std::string host;
 
-		std::string host, port;
+		std::string port;
 
-		InputOutputFormat input_format, output_format;
-		
+		std::string token;
+
 		asio::io_context ioc;
 
 		ssl::context ctx;
 
-		websocket::stream<beast::ssl_stream<tcp::socket>> ws;
+		std::optional<websocket::stream<beast::ssl_stream<tcp::socket>>> ws;
 
-		std::thread worker;
+		bool connected = false;
 	};
 }
 

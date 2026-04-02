@@ -51,7 +51,6 @@ extern "C" {
 
 namespace kyra {
 	using system_clock = std::chrono::system_clock;
-	
 	using time_point = system_clock::time_point;
 	
 	enum class Severity {

@@ -56,9 +56,6 @@ extern "C" {
 namespace kyra {
 	namespace asio = boost::asio;
 	namespace ssl = asio::ssl;
-//	namespace beast = boost::beast;
-//	namespace http = beast::http;
-//	namespace websocket = beast::websocket;
 
 	using tcp = asio::ip::tcp;
 	
@@ -69,9 +66,13 @@ namespace kyra {
 		virtual ~WebSocketServer(void) noexcept = default;
 
 		void run(void);
+
+		void shutdown(void);
 		
 	private:
 		void thread_function(tcp::socket socket);
+
+		void cleanup(void);
 
 		std::string port;
 		
@@ -80,6 +81,12 @@ namespace kyra {
 		ssl::context ctx;
 		
 		tcp::acceptor acceptor;
+
+		std::vector<std::pair<std::thread, std::atomic<bool>*>> threads;
+
+		std::mutex mutex;
+		
+		std::atomic<bool> running{false};
 	};
 }
 

@@ -88,7 +88,6 @@ namespace kyra {
 		
 		std::string host;
 	};
-	
 }
 
 /* Functions declaration */

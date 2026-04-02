@@ -205,19 +205,6 @@ namespace kyra {
 
 		std::vector<ChatHistorySchema> find_chats_by_session(uint64_t session_id,
 															 uint32_t limit = 200);
-
-		// kyra.tool_call_hsitory
-
-		uint64_t insert_tool_call(uint64_t chat_id,
-								  const std::string& tool_name,
-								  const std::string& tool_input);
-
-		bool complete_tool_call(uint64_t tool_call_id,
-								const std::string& tool_output,
-								const std::string& status,
-								uint32_t duration_ms);
-
-		std::vector<ToolCallHistorySchema> find_tool_calls_by_chat(uint64_t chat_id);
 		
 	private:
 		static std::string generate_token(void);

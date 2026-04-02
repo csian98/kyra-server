@@ -12,7 +12,10 @@
 
 /* Include */
 
+#include <thread>
 #include <mutex>
+#include <condition_variable>
+
 #include <memory>
 #include <chrono>
 
@@ -27,6 +30,7 @@
 #include <nlohmann/json.hpp>
 
 #include "kyra-service.h"
+#include "kyra-session-hub.h"
 #include "kyra-protocol.h"
 #include "kyra-exception.h"
 #include "kyra-logger.h"
@@ -62,63 +66,45 @@ extern "C" {
 
 namespace kyra {
 	namespace asio = boost::asio;
-	
 	namespace beast = boost::beast;
-	
 	namespace http = beast::http;
-	
 	namespace websocket = beast::websocket;
 
 	using tcp = asio::ip::tcp;
-	
 	using json = nlohmann::json;
-
-	struct SessionData;
-
-	namespace session {
-		extern std::map<unsigned int,
-			std::pair<websocket::stream<beast::ssl_stream<tcp::socket>>*,
-					  SessionData*>> clients;
-
-		extern std::mutex mutex;
-	}
-	
-	struct SessionData {
-	    unsigned int session_id;
-
-		std::vector<LLMMessage> short_term_memory;
-
-		InputOutputFormat input_format = InputOutputFormat::TEXT,
-			output_format = InputOutputFormat::TEXT;
-
-		std::chrono::steady_clock::time_point timestamp;
-
-		void update_timestamp(void);
-	};
 	
 	class WebSocketSession {
 	public:
-		explicit WebSocketSession(beast::ssl_stream<tcp::socket> socket);
+		explicit WebSocketSession(beast::ssl_stream<tcp::socket> socket,
+								  const UserSchema& user);
 
 		virtual ~WebSocketSession(void) noexcept;
 
 		void run(http::request<http::string_body> req);
 		
 	private:
-		static void broadcast(const Response& text_response,
-							  const Response& audio_response);
+		void reader_loop(void);
+
+		void worker_loop(void);
+
+		void send(const json& payload);
 		
 		websocket::stream<beast::ssl_stream<tcp::socket>> ws;
 
-		std::shared_ptr<SessionData> session_data;
+		uint64_t session_id = 0;
+
+		std::queue<Request> queue;
+
+		std::mutex write_mutex, queue_mutex;
+
+		std::condition_variable cv;
+
+		std::atomic<bool> closed{false};
 	};
 }
 
 /* Functions declaration */
 
-namespace kyra {
-	unsigned int get_session_id(void);
-}
 
 /*
 #ifdef __cplusplus

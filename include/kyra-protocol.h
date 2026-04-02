@@ -97,6 +97,8 @@ namespace kyra {
 		} options;
 
 		static Request from_json(const json& j);
+
+		json to_json(void) const;
 	};
 
 	struct Response {
