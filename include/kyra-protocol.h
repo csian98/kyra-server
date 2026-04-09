@@ -12,6 +12,9 @@
 
 /* Include */
 
+#include <cstdint>
+#include <variant>
+#include <string>
 #include <vector>
 
 #include <boost/beast/core/detail/base64.hpp>
@@ -60,70 +63,146 @@ namespace kyra {
 	};
 
 	enum class RequestType {
-		PING, CHAT, SYSTEM
+		PING, CHAT, SYSTEM, FILE
 	};
 
 	enum class ResponseType {
-		CHAT, SYSTEM
-	};
-
-	struct Image {
-		std::vector<uint8_t> data;	// base64
+		PING, CHAT, SYSTEM, FILE
 	};
 
 	struct Content {
-		InputOutputFormat format;
+		std::vector<uint8_t> data;
 
-		std::vector<uint8_t> data;	// base64
+		std::vector<std::string> images;	// base64
 
-		std::vector<Image> images;
+		static Content from_json(const json& j);
+
+		void to_json(json& j) const;
 	};
 
-	struct Request {
-		RequestType type;
+	struct PingRequestPayload {
+		InputOutputFormat input_format = InputOutputFormat::TEXT;
 
+		InputOutputFormat output_format = InputOutputFormat::TEXT;
+	};
+
+	struct SystemRequestPayload {
+		std::string action;
+
+		std::string text;
+	};
+
+	struct ChatRequestPayload {
 		std::string model;
 
-		InputOutputFormat input_format;
+		InputOutputFormat input_format = InputOutputFormat::TEXT;
 
-		InputOutputFormat output_format;
+		InputOutputFormat output_format = InputOutputFormat::TEXT;
 
 		Content content;
 
 		struct Option {
-			float temperature = 0.2;
-			
+			float temperature = 0.2f;
+
 			bool think_deep = false;
 		} options;
+	};
+
+	struct FileRequestPayload {
+		std::string action;
+
+		std::string path;
+
+		std::vector<uint8_t> data;
+	};
+
+	using RequestPayload =
+		std::variant<PingRequestPayload, SystemRequestPayload,
+					 ChatRequestPayload, FileRequestPayload>;
+	
+	struct Request {
+		RequestType type;
+
+		RequestPayload payload;
 
 		static Request from_json(const json& j);
 
 		json to_json(void) const;
+
+		template <typename T>
+		T& get(void) { return std::get<T>(this->payload); }
+
+		template <typename T>
+		const T& get(void) const { return std::get<T>(this->payload); }
 	};
 
-	struct Response {
-		ResponseType type;
+	struct PingResponsePayload {
+		std::string text;
+	};
 
-		InputOutputFormat output_format;
+	struct SystemResponsePayload {
+		InputOutputFormat output_format = InputOutputFormat::TEXT;
+		
+		std::string action;
 
 	    Content content;
 
 		std::string text;
+	};
+
+	struct ChatResponsePayload {
+		InputOutputFormat output_format = InputOutputFormat::TEXT;
+
+		Content content;
+
+		std::string text;
+	};
+
+	struct FileResponsePayload {
+		std::string action;
+
+		json metadata;
+
+		std::vector<uint8_t> data;
+	};
+
+	using ResponsePayload =
+		std::variant<PingResponsePayload, SystemResponsePayload,
+					 ChatResponsePayload, FileResponsePayload>;
+
+	struct Response {
+		ResponseType type;
+
+		ResponsePayload payload;
 
 		json to_json(void) const;
+
+		template <typename T>
+		T& get(void) { return std::get<T>(this->payload); }
+
+		template <typename T>
+		const T& get(void) const { return std::get<T>(this->payload); }
 	};
 }
 
 /* Functions declaration */
 
 namespace kyra {
-	std::string extract_text(const Request& request);
+	std::string extract_request(const Request& request);
+	
+	std::string extract_response(const Response& response);
 
-	// from text
-	Response generate_response(
-		const std::string& text,
-		InputOutputFormat output_format,
-		ResponseType type = ResponseType::CHAT);
+	Response make_ping_response(const std::string& text = "pong");
+
+	Response make_system_response(const std::string& action,
+								  const std::string& text);
+
+	Response make_chat_response(InputOutputFormat output_format,
+								const std::string& text);
+
+	Response make_file_response(const std::string& action,
+								const json& metadata = {},
+								std::vector<uint8_t> data = {});
 
 	std::string base64_encode(
 		const std::vector<uint8_t>& data);

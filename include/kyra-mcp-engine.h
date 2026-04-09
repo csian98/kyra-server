@@ -1,5 +1,5 @@
 /**
- * @file		kyra-mcp-client.h
+ * @file		kyra-mcp-engine.h
  * @author		Jeong Hoon (Sian) Choi
  */
 	 
@@ -7,8 +7,8 @@
 //#pragma GCC diagnostic ignored "-Wstringop-truncation"
 //#pragma comment(lib, "libpthread.so")
 
-#ifndef _HEADER_KYRA_MCP_CLIENT_H_
-#define _HEADER_KYRA_MCP_CLIENT_H_
+#ifndef _HEADER_KYRA_MCP_ENGINE_H_
+#define _HEADER_KYRA_MCP_ENGINE_H_
 
 /* Include */
 
@@ -76,11 +76,11 @@ namespace kyra {
 		std::string mime_type;
 	};
 
-	class MCPClient {
+	class MCPEngine {
 	public:
-		MCPClient(const std::string& command);
+		MCPEngine(const std::string& command);
 
-		virtual ~MCPClient(void) noexcept;
+		virtual ~MCPEngine(void) noexcept;
 
 		bool initialize(void);
 
@@ -107,7 +107,7 @@ namespace kyra {
 		
 		std::string mcp_command;
 
-		int pid;;
+		int pid;
 
 		int stdin_pipe[2];
 		

@@ -18,6 +18,7 @@
 
 #include <memory>
 #include <chrono>
+#include <filesystem>
 
 #include <string>
 #include <set>
@@ -30,6 +31,8 @@
 #include <nlohmann/json.hpp>
 
 #include "kyra-service.h"
+#include "kyra-filesystem.h"
+#include "kyra-pre-retrieval.h"
 #include "kyra-session-hub.h"
 #include "kyra-protocol.h"
 #include "kyra-exception.h"
@@ -69,6 +72,7 @@ namespace kyra {
 	namespace beast = boost::beast;
 	namespace http = beast::http;
 	namespace websocket = beast::websocket;
+	namespace fs = std::filesystem;
 
 	using tcp = asio::ip::tcp;
 	using json = nlohmann::json;
@@ -76,7 +80,8 @@ namespace kyra {
 	class WebSocketSession {
 	public:
 		explicit WebSocketSession(beast::ssl_stream<tcp::socket> socket,
-								  const UserSchema& user);
+								  const UserSchema& user,
+								  const ProfileSchema& profile);
 
 		virtual ~WebSocketSession(void) noexcept;
 
@@ -87,7 +92,15 @@ namespace kyra {
 
 		void worker_loop(void);
 
+		void handle_system_request(const Request& request,
+								   SessionContext* ctx);
+
+		void handle_file_request(const Request& request,
+								 SessionContext* ctx);
+
 		void send(const json& payload);
+
+		void send_binary(const std::vector<uint8_t>& data);
 		
 		websocket::stream<beast::ssl_stream<tcp::socket>> ws;
 
@@ -100,6 +113,8 @@ namespace kyra {
 		std::condition_variable cv;
 
 		std::atomic<bool> closed{false};
+
+		FileSystem u_fs;
 	};
 }
 

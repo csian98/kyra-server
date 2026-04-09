@@ -1,5 +1,5 @@
 /**
- * @file		kyra-ollama-client.h
+ * @file		kyra-ollama-engine.h
  * @author		Jeong Hoon (Sian) Choi
  */
 	 
@@ -7,8 +7,8 @@
 //#pragma GCC diagnostic ignored "-Wstringop-truncation"
 //#pragma comment(lib, "libpthread.so")
 
-#ifndef _HEADER_KYRA_OLLAMA_CLIENT_H_
-#define _HEADER_KYRA_OLLAMA_CLIENT_H_
+#ifndef _HEADER_KYRA_OLLAMA_ENGINE_H_
+#define _HEADER_KYRA_OLLAMA_ENGINE_H_
 
 /* Include */
 
@@ -18,7 +18,7 @@
 #include <curl/curl.h>
 #include <nlohmann/json.hpp>
 
-#include "kyra-llm-client.h"
+#include "kyra-ttt-engine.h"
 #include "kyra-protocol.h"
 #include "kyra-exception.h"
 #include "kyra-logger.h"
@@ -55,31 +55,31 @@ extern "C" {
 namespace kyra {
 	using json = nlohmann::json;
 	
-	class OllamaClient: public LLMClient {
+	class OllamaEngine: public TTTEngine {
 	public:
-		OllamaClient(const std::string& host =
+		OllamaEngine(const std::string& host =
 					 "http://localhost:11434");
 
-		virtual ~OllamaClient(void) noexcept;
+		virtual ~OllamaEngine(void) noexcept;
 
 		virtual std::vector<std::string> list_models(void) override;
 
-		virtual std::string generate(const std::string& model,
-									 const std::string& prompt,
-									 const std::vector<LLMImage>& images = {},
-									 const float temperature = 0.6,
-									 const bool think = true) override;
+		std::string generate(const std::string& model,
+							 const std::string& prompt,
+							 const std::vector<std::string>& images = {},
+							 const float temperature = 0.8,
+							 const bool think_deep = false);
 
 		virtual std::string chat(const std::string& model,
-								 std::vector<LLMMessage>& messages,
-								 const float temperature = 0.6,
-								 const bool think = true) override;
-
+								 std::vector<Message>& messages,
+								 const float temperature = 0.8,
+								 const bool think_deep = true) override;
+	
 	private:
 		virtual void truncate_messages(
-			std::vector<LLMMessage>& messages) override;
+			std::vector<Message>& messages) override;
 
-		json message_to_json(const LLMMessage& msg) const;
+		json message_to_json(const Message& msg) const;
 		
 		std::string http_get(const std::string& endpoint);
 		

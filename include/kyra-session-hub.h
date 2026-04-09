@@ -35,6 +35,7 @@
 #include "nlohmann/json.hpp"
 
 #include "kyra-database-handle.h"
+#include "kyra-pre-retrieval.h"
 #include "kyra-protocol.h"
 #include "kyra-service.h"
 #include "kyra-exception.h"
@@ -83,13 +84,13 @@ namespace kyra {
 
 		PendingMessage(const std::string& role,
 					   const std::string& content,
-					   std::vector<LLMImage> images = {});
+					   std::vector<std::string> images = {});
 		
 		std::string role;
 
 		std::string content;
 
-		std::vector<LLMImage> images;
+		std::vector<std::string> images;
 
 		std::chrono::steady_clock::time_point enqueued_at;
 	};
@@ -131,7 +132,9 @@ namespace kyra {
 
 		InputOutputFormat output_format = InputOutputFormat::TEXT;
 
-		std::vector<LLMMessage> short_term_memory;
+		std::vector<Message> short_term_memory;
+
+		std::shared_ptr<PreRetrieval> pre_retrieval;
 
 	    MessageQueue pending;
 
@@ -154,8 +157,11 @@ namespace kyra {
 
 		std::optional<UserSchema> authenticate(const std::string& token);
 
+		std::optional<ProfileSchema> find_profile(uint64_t user_id);
+
 	    uint64_t register_session(
-			websocket::stream<beast::ssl_stream<tcp::socket>>* ws, const UserSchema& user);
+			websocket::stream<beast::ssl_stream<tcp::socket>>* ws,
+			const UserSchema& user, const ProfileSchema& profile);
 
 		void unregister_session(uint64_t session_id);
 
@@ -164,7 +170,7 @@ namespace kyra {
 		void submit(uint64_t session_id,
 					const std::string& role,
 					const std::string& content,
-					std::vector<LLMImage> images = {});
+					std::vector<std::string> images = {});
 
 		size_t drain_and_append(uint64_t session_id);
 

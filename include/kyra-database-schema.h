@@ -61,6 +61,36 @@ namespace kyra {
 		std::string updated_at;
 	};
 
+	struct ProfileSchema {
+		uint64_t uid;
+
+		std::string fullname;
+
+		std::string system_prompt;
+
+		std::string time_zone;
+
+		std::string language;
+
+		std::string birthday;
+
+		std::string updated_at;
+	};
+
+	struct CalendarSchema {
+		uint64_t id;
+
+		uint64_t uid;
+
+		std::string handle;
+
+		std::string label;
+
+		bool writable;
+
+		std::string created_at;
+	};
+
 	struct ContactSchema {
 		uint64_t id;
 

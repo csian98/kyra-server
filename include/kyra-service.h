@@ -15,11 +15,11 @@
 #include <memory>
 #include <mutex>
 
-#include "kyra-llm-client.h"
+#include "kyra-tts-engine.h"
 #include "kyra-stt-engine.h"
 #include "kyra-tts-engine.h"
 
-#include "kyra-ollama-client.h"
+#include "kyra-ollama-engine.h"
 #include "kyra-whisper-engine.h"
 #include "kyra-piper-engine.h"
 
@@ -66,7 +66,7 @@ namespace kyra {
 		Response text_to_text(Request&& request);
 		
 		Response text_to_text(Request&& request,
-							  std::vector<LLMMessage>& messages);
+							  std::vector<Message>& messages);
 		
 		Response text_to_speech(Response&& response);
 		
@@ -77,11 +77,11 @@ namespace kyra {
 
 		Service& operator=(const Service&) = delete;
 		
-		std::mutex llm_mutex, stt_mutex, tts_mutex;
-
-		std::shared_ptr<LLMClient> llm_client;
+		std::mutex stt_mutex, ttt_mutex, tts_mutex;
 
 		std::shared_ptr<STTEngine> stt_engine;
+
+		std::shared_ptr<TTTEngine> ttt_engine;
 
 		std::shared_ptr<TTSEngine> tts_engine;
 	};

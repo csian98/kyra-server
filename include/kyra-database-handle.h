@@ -154,8 +154,36 @@ namespace kyra {
 
 		bool delete_user(uint64_t user_id);
 
-		// kyra.contacts
+		// kyra.profile
+		std::optional<ProfileSchema> find_profile_by_uid(uint64_t uid);
+		
+	    bool update_profile_fullname(uint64_t uid, const std::string& fullname);
 
+		bool update_profile_system_prompt(uint64_t uid, const std::string& system_prompt);
+
+		bool update_profile_time_zone(uint64_t uid, const std::string& time_zone);
+
+		bool update_profile_language(uint64_t uid, const std::string& language);
+
+		bool update_profile_birthday(uint64_t uid, const std::string& birthday);
+
+		// kyra.calendars
+		uint64_t create_calendar(uint64_t uid,
+								 const std::string& handle,
+								 const std::string& label = "",
+								 bool writable = false);
+		
+		std::vector<CalendarSchema> find_calendars_by_uid(uint64_t uid);
+
+		bool update_calendar_handle(uint64_t calendar_id, const std::string& handle);
+
+		bool update_calendar_label(uint64_t calendar_id, const std::string& label);
+
+		bool set_calendar_writable(uint64_t calendar_id, bool writable);
+
+		bool delete_calendar(uint64_t calendar_id);
+
+		// kyra.contacts
 		uint64_t create_contact(uint64_t uid,
 								const std::string& platform,
 								const std::string& handle,
