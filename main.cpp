@@ -45,6 +45,16 @@ int main(int argc, char* argv[]) {
 //	std::set_terminate(&custom_terminate_fnct);
 
 	try {
+		kyra::DatabaseConfig config;
+		config.host = "127.0.0.1";
+		config.port = 3306;
+		config.user = "kyra";
+		config.password = "kyra";
+		config.database = "kyra";
+		config.pool_size = 4;
+
+		kyra::SessionHub::get_instance().initialize(config);
+		
         kyra::Server server;
         server.run();
     } catch (std::exception& e) {

@@ -74,7 +74,13 @@ namespace kyra {
 								 std::vector<Message>& messages,
 								 const float temperature = 0.8,
 								 const bool think_deep = true) override;
-	
+
+		virtual std::string chat_stream(const std::string& model,
+										std::vector<Message>& messages,
+										StreamCallback cb,
+										const float temperature = 0.8,
+										const bool think_deep = true) override;
+		
 	private:
 		virtual void truncate_messages(
 			std::vector<Message>& messages) override;
@@ -85,6 +91,10 @@ namespace kyra {
 		
 		std::string http_post(const std::string& endpoint,
 							  const json& data);
+
+		std::string http_post_stream(const std::string& endpoint,
+									 const json& data,
+									 std::function<void(const std::string&)> line_cb);
 		
 		std::string host;
 	};

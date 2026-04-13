@@ -34,6 +34,7 @@
 #include "kyra-filesystem.h"
 #include "kyra-pre-retrieval.h"
 #include "kyra-session-hub.h"
+#include "kyra-code-session.h"
 #include "kyra-protocol.h"
 #include "kyra-exception.h"
 #include "kyra-logger.h"
@@ -98,6 +99,9 @@ namespace kyra {
 		void handle_file_request(const Request& request,
 								 SessionContext* ctx);
 
+		void handle_code_request(const Request& request,
+								 SessionContext* ctx);
+
 		void send(const json& payload);
 
 		void send_binary(const std::vector<uint8_t>& data);
@@ -114,6 +118,8 @@ namespace kyra {
 
 		std::atomic<bool> closed{false};
 
+		std::unique_ptr<CodeSession> code_session;
+		
 		FileSystem u_fs;
 	};
 }

@@ -87,6 +87,8 @@ namespace kyra {
 		std::string fullname;
 
 		std::string birthday;
+
+		std::string language;
 	};
 
 	class PreRetrieval {

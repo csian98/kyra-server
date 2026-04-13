@@ -38,7 +38,7 @@ CFLAGS := $(INC_FLAGS) -MMD -MP
 CXXFLAGS := -std=c++20 $(INC_FLAGS) -MMD -MP
 #SHD_CXXFLAGS := -std=c++20 $(INC_FLAGS) -MMD -MP -fPIC
 NVCCFLAGS := $(INC_FLAGS)
-LDFLAGS := -L./lib -L/usr/lib -lkyra -lcurl -lssl -lcrypto -lmariadbcpp -lonnxruntime -lespeak-ng -lwhisper
+LDFLAGS := -L./lib -L/usr/lib -lkyra -lcurl -lssl -lcrypto -lutil -lmariadbcpp -lonnxruntime -lespeak-ng -lwhisper
 ADMIN_LDFLAGS := -L./lib -L/usr/lib -lkyra -lssl -lcrypto -lmariadbcpp
 SYSCMD_LDFLAGS := -L./lib -L/usr/lib -lkyra -lssl -lcrypto
 ARFLAGS := crs

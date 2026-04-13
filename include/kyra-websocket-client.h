@@ -61,7 +61,7 @@ namespace kyra {
 	namespace beast = boost::beast;
 	namespace http = beast::http;
 	namespace websocket = beast::websocket;
-
+ 
 	using tcp = asio::ip::tcp;
 	using json = nlohmann::json;
 	
@@ -70,33 +70,31 @@ namespace kyra {
 		explicit WebSocketClient(const std::string& host,
 								 const std::string& port,
 								 const std::string& token);
-
+ 
 		virtual ~WebSocketClient(void) noexcept = default;
-
+ 
 		void connect(void);
-
+ 
 		void disconnect(void);
-
-		void send_text(
-			const std::string& text,
-			InputOutputFormat output_foramat = InputOutputFormat::TEXT,
-			const std::string& model = "kyra");
-
+ 
+		void send_system(const std::string& action,
+						 const std::string& text);
+ 
 		std::optional<json> read_response(void);
 		
 	private:
 		std::string host;
-
+ 
 		std::string port;
-
+ 
 		std::string token;
-
+ 
 		asio::io_context ioc;
-
+ 
 		ssl::context ctx;
-
+ 
 		std::optional<websocket::stream<beast::ssl_stream<tcp::socket>>> ws;
-
+ 
 		bool connected = false;
 	};
 }

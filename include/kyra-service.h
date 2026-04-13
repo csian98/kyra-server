@@ -12,6 +12,7 @@
 
 /* Include */
 
+#include <functional>
 #include <memory>
 #include <mutex>
 
@@ -57,6 +58,8 @@ extern "C" {
 /* Data structures declaration - struct & class */
 
 namespace kyra {
+	using SendChunkCallback = std::function<void(const json&)>;
+	
 	class Service {
 	public:
 		static Service& get_instance(void);
@@ -69,6 +72,10 @@ namespace kyra {
 							  std::vector<Message>& messages);
 		
 		Response text_to_speech(Response&& response);
+
+		std::string stream_pipeline(Request&& request,
+									std::vector<Message>& messages,
+									SendChunkCallback send_chunk);
 		
 	private:
 		explicit Service(void);

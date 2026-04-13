@@ -56,6 +56,9 @@ extern "C" {
 namespace kyra {
 	using json = nlohmann::json;
 
+	using StreamCallback =
+		std::function<void(const std::string& token, bool thinking, bool done)>;
+
     struct Message {
 		std::string role;
 
@@ -83,6 +86,12 @@ namespace kyra {
 								 std::vector<Message>& messages,
 								 const float temperature = 0.8,
 								 const bool think_deep = true) = 0;
+
+		virtual std::string chat_stream(const std::string& model,
+										std::vector<Message>& messages,
+										StreamCallback cb,
+										const float temperature = 0.8,
+										const bool think_deep = true);
 
 	protected:
 		virtual void truncate_messages(std::vector<Message>& messages);

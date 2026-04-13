@@ -63,11 +63,11 @@ namespace kyra {
 	};
 
 	enum class RequestType {
-		PING, CHAT, SYSTEM, FILE
+		PING, CHAT, SYSTEM, FILE, CODE
 	};
 
 	enum class ResponseType {
-		PING, CHAT, SYSTEM, FILE
+		PING, CHAT, SYSTEM, FILE, CODE
 	};
 
 	struct Content {
@@ -99,6 +99,8 @@ namespace kyra {
 
 		InputOutputFormat output_format = InputOutputFormat::TEXT;
 
+		bool stream = false;
+
 		Content content;
 
 		struct Option {
@@ -116,9 +118,20 @@ namespace kyra {
 		std::vector<uint8_t> data;
 	};
 
+	struct CodeRequestPayload {
+		std::string action;
+
+		std::string data;
+
+		int cols = 80;
+
+		int rows = 24;
+	};
+
 	using RequestPayload =
 		std::variant<PingRequestPayload, SystemRequestPayload,
-					 ChatRequestPayload, FileRequestPayload>;
+					 ChatRequestPayload, FileRequestPayload,
+					 CodeRequestPayload>;
 	
 	struct Request {
 		RequestType type;
@@ -166,9 +179,18 @@ namespace kyra {
 		std::vector<uint8_t> data;
 	};
 
+	struct CodeResponsePayload {
+		std::string action;
+
+		std::string data;
+
+		int exit_code = -1;
+	};
+
 	using ResponsePayload =
 		std::variant<PingResponsePayload, SystemResponsePayload,
-					 ChatResponsePayload, FileResponsePayload>;
+					 ChatResponsePayload, FileResponsePayload,
+					 CodeResponsePayload>;
 
 	struct Response {
 		ResponseType type;
@@ -203,6 +225,18 @@ namespace kyra {
 	Response make_file_response(const std::string& action,
 								const json& metadata = {},
 								std::vector<uint8_t> data = {});
+
+	Response make_code_response(const std::string& action,
+								const std::string& data = "",
+								int exit_code = -1);
+
+	json make_stream_start(void);
+
+	json make_stream_token(const std::string& token, bool thinking = false);
+
+	json make_stream_sentence_audio(const std::vector<uint8_t>& pcm);
+
+	json make_stream_end(const std::string& full_text);
 
 	std::string base64_encode(
 		const std::vector<uint8_t>& data);
