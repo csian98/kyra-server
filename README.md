@@ -128,17 +128,31 @@ etc/mcp-server/config.json
 Currently implemented clients:
 
 #### Kyra-Client for Android
-<img src="images/kyra-client-android1.png">
-<img src="images/kyra-client-android2.png">
-<img src="images/kyra-client-android3.png">
-<img src="images/kyra-client-android4.png">
+
+<p align="center">
+  <img src="images/kyra-client-android1.png" width="45%">
+  <img src="images/kyra-client-android2.png" width="45%">
+</p>
+
+<p align="center">
+  <img src="images/kyra-client-android3.png" width="45%">
+  <img src="images/kyra-client-android4.png" width="45%">
+</p>
 
 
 #### Kyra-Client for Emacs
-<img src="images/kyra-client-emacs.png">
+
+<p align="center">
+  <img src="images/kyra-client-emacs.png" width="70%">
+</p>
+
 
 #### Kyra-Client for Qt App (implement for mac)
-<img src="images/kyra-client-app.png">
+
+<p align="center">
+  <img src="images/kyra-client-app.png" width="70%">
+</p>
+
 
 #### Kyra-Client for Raspberry Pi
 Voice-only interface for physical interaction.
