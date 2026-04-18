@@ -115,6 +115,8 @@ The following servers are included by default:
 | memory (knowledge-graph)            | long-term memory     |
 | Brave Search                        | web search           |
 | CalDAV                              | calendar integration |
+| GMAIL                               | mail send/receive    |
+| GOOGLE MAP                          | near location/path   |
 
 Configuration is defined in:
 
@@ -124,6 +126,12 @@ etc/mcp-server/config.json
 
 ### Kyra-Clients
 Currently implemented clients:
+
+#### Kyra-Client for Android
+<img src="images/kyra-client-android1.png">
+<img src="images/kyra-client-android2.png">
+<img src="images/kyra-client-android3.png">
+<img src="images/kyra-client-android4.png">
 
 
 #### Kyra-Client for Emacs
