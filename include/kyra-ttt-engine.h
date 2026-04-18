@@ -66,12 +66,16 @@ namespace kyra {
 
 		std::vector<std::string> images;
 
+		json tool_calls;
+
 		Message(void) = default;
 
 		Message(const std::string& role,
 				const std::string& content);
 
 		bool has_image(void) const noexcept;
+
+		bool has_tool_calls(void) const noexcept;
 	};
 
 	class TTTEngine {
@@ -112,7 +116,8 @@ namespace kyra {
     void update_messages(std::vector<Message>& messages,
 						 const std::string& role,
 						 const std::string& content,
-						 std::vector<std::string> images = {});
+						 std::vector<std::string> images = {},
+						 json tool_calls = json());
 }
 
 

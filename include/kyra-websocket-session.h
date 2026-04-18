@@ -93,6 +93,8 @@ namespace kyra {
 
 		void worker_loop(void);
 
+		void watchdog_loop(void);
+
 		void handle_system_request(const Request& request,
 								   SessionContext* ctx);
 
@@ -112,9 +114,9 @@ namespace kyra {
 
 		std::queue<Request> queue;
 
-		std::mutex write_mutex, queue_mutex;
+		std::mutex write_mutex, queue_mutex, watchdog_mutex;
 
-		std::condition_variable cv;
+		std::condition_variable cv, watchdog_cv;
 
 		std::atomic<bool> closed{false};
 

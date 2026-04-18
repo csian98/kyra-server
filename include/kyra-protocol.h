@@ -84,6 +84,14 @@ namespace kyra {
 		InputOutputFormat input_format = InputOutputFormat::TEXT;
 
 		InputOutputFormat output_format = InputOutputFormat::TEXT;
+
+	    bool location_sharing = false;
+
+	    struct Option {
+			double latitude = 0.0;
+
+			double longitude = 0.0;
+		} options;
 	};
 
 	struct SystemRequestPayload {

@@ -97,7 +97,11 @@ namespace kyra {
 
 		virtual ~PreRetrieval(void) noexcept = default;
 
-		std::string build(const std::string& query, int limit = 0) const;
+		std::string build(const std::string& query,
+						  bool location_sharing,
+						  double latitude,
+						  double longtitude,
+						  int limit = 5) const;
 
 		std::vector<MemoryEntry> search_memories(
 			const std::string& query, int limit = 0) const;
@@ -114,6 +118,10 @@ namespace kyra {
 
 	private:
 		std::string time_context(void) const;
+
+		std::string location_context(bool location_sharing,
+									 double latitude,
+									 double longtitude) const;
 
 		std::string memory_context(const std::string& query,
 								   int limit) const;

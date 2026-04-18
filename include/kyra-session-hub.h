@@ -132,6 +132,12 @@ namespace kyra {
 
 		InputOutputFormat output_format = InputOutputFormat::TEXT;
 
+		bool location_sharing = false;
+
+		double latitude = 0.0;
+
+		double longtitude = 0.0;
+
 		std::vector<Message> short_term_memory;
 
 		std::shared_ptr<PreRetrieval> pre_retrieval;
@@ -144,7 +150,15 @@ namespace kyra {
 
 		void update_timestamp(void);
 
+		void update_location(bool location_sharing,
+							 double latitude,
+							 double longtitude);
+		
 		bool is_admin(void) const noexcept;
+
+		bool is_ping_expired(
+			std::chrono::seconds timeout = std::chrono::seconds(60)
+			) const noexcept;
 	};
 	
 	class SessionHub {
