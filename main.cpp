@@ -53,7 +53,9 @@ int main(int argc, char* argv[]) {
 		config.database = "kyra";
 		config.pool_size = 4;
 
+		// initialize
 		kyra::SessionHub::get_instance().initialize(config);
+		kyra::Service::get_instance();
 		
         kyra::Server server;
         server.run();
