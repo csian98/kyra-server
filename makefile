@@ -1,11 +1,11 @@
 # ENV
-EXEC_TARGET := main
+EXEC_TARGET := main.elf
 EXEC_SRC := main.cpp
 
-ADMIN_TARGET := kyra-admin-console
+ADMIN_TARGET := bin/kyra-admin-console.elf
 ADMIN_SRC := admin/src/kyra-admin-console.cpp
-SYSCMD_TARGET := kyra-system-command
-SYSCMD_SRC := admin/src/kyra-system-command.cpp
+SYSCMD_TARGET := bin/kyra-system-request.elf
+SYSCMD_SRC := admin/src/kyra-system-request.cpp
 
 LIB_TARGET := libkyra.a
 CC := clang
@@ -66,22 +66,13 @@ $(BUILD_DIR)/%.cu.o: %.cu
 .PHONY: exec exec_debug test clean clean_lib
 exec: $(LIB_DIR)/$(LIB_TARGET)
 	$(CXX) -o $(EXEC_TARGET) $(EXEC_SRC) $(CXXFLAGS) $(LDFLAGS)
-	rm $(EXEC_TARGET).d
-
-exec_debug: $(LIB_DIR)/$(LIB_TARGT)
-	$(CXX) -o $(EXEC_TARGET) $(EXEC_SRC) $(CXXFLAGS) $(LDFLAGS) -g
-	rm -r $(EXEC_TARGET).d #$(EXEC_TARGET).dSYM
 
 admin: $(LIB_DIR)/$(LIB_TARGET)
 	$(CXX) -o $(ADMIN_TARGET) $(ADMIN_SRC) $(CXXFLAGS) $(ADMIN_LDFLAGS)
 	rm -f $(ADMIN_TARGET).d
 	$(CXX) -o $(SYSCMD_TARGET) $(SYSCMD_SRC) $(CXXFLAGS) $(SYSCMD_LDFLAGS)	
-	rm -f $(SYSCMD_TARGET).d
 
 clean:
-	rm -r $(BUILD_DIR)/*
-
-clean_lib:
-	rm -r $(LIB_DIR)/*
+	rm -f $(DEPS)
 
 -include $(DEPS)

@@ -181,6 +181,8 @@ namespace kyra {
 
 		SessionContext* get_context(uint64_t session_id);
 
+		bool has_user_session(const std::string& username);
+
 		void submit(uint64_t session_id,
 					const std::string& role,
 					const std::string& content,
@@ -192,13 +194,15 @@ namespace kyra {
 									 const std::string& role,
 									 const std::string& content);
 
-		void broadcast_system(const Response& text_response,
-							  const Response& audio_response);
+		size_t broadcast(const Response& response);
 
-		void direct_message(const std::string& from_username,
-							const std::string& to_username,
-							const Response& text_response,
-							const Response& audio_response);
+		size_t direct_message(const std::string& from_username,
+							  const std::string& to_username,
+							  const Response& response);
+
+		size_t ttt_message(const std::string& to_username,
+						   const Response& text_response,
+						   const Response& audio_response);
 		
 	private:
 		SessionHub(void) = default;

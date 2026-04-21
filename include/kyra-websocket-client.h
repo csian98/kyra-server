@@ -76,8 +76,11 @@ namespace kyra {
 		void connect(void);
  
 		void disconnect(void);
+
+		void send_ping(void);
  
-		void send_system(const std::string& action,
+		void send_system(const std::string& target,
+						 const std::string& action,
 						 const std::string& text);
  
 		std::optional<json> read_response(void);

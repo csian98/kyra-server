@@ -89,37 +89,37 @@ namespace kyra {
 		void run(http::request<http::string_body> req);
 		
 	private:
-		void reader_loop(void);
-
-		void worker_loop(void);
-
-		void watchdog_loop(void);
-
+		void watchdog(void);
+		
+		void handle_request(void);
+		
+		void handle_chat_request(void);
+		
 		void handle_system_request(const Request& request,
 								   SessionContext* ctx);
-
+		
 		void handle_file_request(const Request& request,
 								 SessionContext* ctx);
-
+		
 		void handle_code_request(const Request& request,
 								 SessionContext* ctx);
-
+		
 		void send(const json& payload);
-
+		
 		void send_binary(const std::vector<uint8_t>& data);
 		
 		websocket::stream<beast::ssl_stream<tcp::socket>> ws;
-
+		
 		uint64_t session_id = 0;
-
+		
 		std::queue<Request> queue;
-
+		
 		std::mutex write_mutex, queue_mutex, watchdog_mutex;
-
+		
 		std::condition_variable cv, watchdog_cv;
-
+		
 		std::atomic<bool> closed{false};
-
+		
 		std::unique_ptr<CodeSession> code_session;
 		
 		FileSystem u_fs;

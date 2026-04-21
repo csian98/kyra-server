@@ -67,7 +67,7 @@ namespace kyra {
 	};
 
 	enum class ResponseType {
-		PING, CHAT, SYSTEM, FILE, CODE
+		PING, STATUS, ERROR, CHAT, SYSTEM, FILE, CODE
 	};
 
 	struct Content {
@@ -94,10 +94,14 @@ namespace kyra {
 		} options;
 	};
 
-	struct SystemRequestPayload {
+	struct SystemRequestPayload {		
 		std::string action;
-
+		
 		std::string text;
+
+		struct Option {
+			std::string target;
+		} options;
 	};
 
 	struct ChatRequestPayload {
@@ -161,14 +165,22 @@ namespace kyra {
 		std::string text;
 	};
 
-	struct SystemResponsePayload {
-		InputOutputFormat output_format = InputOutputFormat::TEXT;
-		
+	struct StatusResponsePayload {
+		std::string text;
+	};
+
+	struct ErrorResponsePayload {
+		std::string text;
+	};
+
+	struct SystemResponsePayload {		
 		std::string action;
 
-	    Content content;
-
 		std::string text;
+
+		struct Option {
+			std::string source;
+		} options;
 	};
 
 	struct ChatResponsePayload {
@@ -196,7 +208,8 @@ namespace kyra {
 	};
 
 	using ResponsePayload =
-		std::variant<PingResponsePayload, SystemResponsePayload,
+		std::variant<PingResponsePayload, StatusResponsePayload,
+					 ErrorResponsePayload, SystemResponsePayload,
 					 ChatResponsePayload, FileResponsePayload,
 					 CodeResponsePayload>;
 
@@ -222,10 +235,17 @@ namespace kyra {
 	
 	std::string extract_response(const Response& response);
 
+	Request make_chat_request(const std::string& text);
+
 	Response make_ping_response(const std::string& text = "pong");
 
+	Response make_status_response(const std::string& text);
+
+	Response make_error_response(const std::string& text);
+
 	Response make_system_response(const std::string& action,
-								  const std::string& text);
+								  const std::string& text,
+								  const std::string& source = "");
 
 	Response make_chat_response(InputOutputFormat output_format,
 								const std::string& text);
