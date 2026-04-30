@@ -81,6 +81,7 @@ namespace kyra {
  
 		void send_system(const std::string& target,
 						 const std::string& action,
+						 const std::string& sub,
 						 const std::string& text);
  
 		std::optional<json> read_response(void);

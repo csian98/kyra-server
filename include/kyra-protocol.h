@@ -94,12 +94,14 @@ namespace kyra {
 		} options;
 	};
 
-	struct SystemRequestPayload {		
+	struct SystemRequestPayload {	
 		std::string action;
 		
 		std::string text;
 
 		struct Option {
+			std::string sub;
+			
 			std::string target;
 		} options;
 	};

@@ -35,6 +35,7 @@
 #include "kyra-pre-retrieval.h"
 #include "kyra-session-hub.h"
 #include "kyra-code-session.h"
+#include "kyra-cron-handle.h"
 #include "kyra-protocol.h"
 #include "kyra-exception.h"
 #include "kyra-logger.h"

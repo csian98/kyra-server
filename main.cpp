@@ -54,13 +54,22 @@ int main(int argc, char* argv[]) {
 		config.pool_size = 4;
 
 		// initialize
+		kyra::MemoryServer::get_instance().start();
+		kyra::CronHandle::get_instance().initialize("etc/cron/crontab");
+		kyra::CronHandle::get_instance().start();
 		kyra::SessionHub::get_instance().initialize(config);
 		kyra::Service::get_instance();
 		
         kyra::Server server;
         server.run();
+
+		kyra::CronHandle::get_instance().stop();
+		kyra::MemoryServer::get_instance().stop();
     } catch (std::exception& e) {
         std::cerr << e.what() << "\n";
+		kyra::CronHandle::get_instance().stop();
+		kyra::MemoryServer::get_instance().stop();
+		return 1;
     }
 
 	return 0;
