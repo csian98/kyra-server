@@ -14,6 +14,7 @@
 
 #include "kyra-websocket-server.h"
 #include "kyra-memory-server.h"
+#include "kyra-frame-server.h"
 #include "kyra-cron-handle.h"
 #include "kyra-exception.h"
 #include "kyra-logger.h"

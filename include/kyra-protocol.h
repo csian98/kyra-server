@@ -63,11 +63,11 @@ namespace kyra {
 	};
 
 	enum class RequestType {
-		PING, CHAT, SYSTEM, FILE, CODE
+		PING, CHAT, SYSTEM, FILE, CODE, FRAME
 	};
 
 	enum class ResponseType {
-		PING, STATUS, ERROR, CHAT, SYSTEM, FILE, CODE
+		PING, STATUS, ERROR, CHAT, SYSTEM, FILE, CODE, FRAME
 	};
 
 	struct Content {
@@ -142,10 +142,26 @@ namespace kyra {
 		int rows = 24;
 	};
 
+	struct FrameRequestPayload {
+		std::string action;
+
+		std::vector<uint8_t> data;
+
+		struct Option {
+			std::string user_id;
+
+			std::string crop_id;
+
+			std::string name;
+
+			json profile;
+		} options;
+	};
+
 	using RequestPayload =
 		std::variant<PingRequestPayload, SystemRequestPayload,
 					 ChatRequestPayload, FileRequestPayload,
-					 CodeRequestPayload>;
+					 CodeRequestPayload, FrameRequestPayload>;
 	
 	struct Request {
 		RequestType type;
@@ -209,11 +225,17 @@ namespace kyra {
 		int exit_code = -1;
 	};
 
+	struct FrameResponsePayload {
+		std::string action;
+
+		json metadata;
+	};
+
 	using ResponsePayload =
 		std::variant<PingResponsePayload, StatusResponsePayload,
 					 ErrorResponsePayload, SystemResponsePayload,
 					 ChatResponsePayload, FileResponsePayload,
-					 CodeResponsePayload>;
+					 CodeResponsePayload, FrameResponsePayload>;
 
 	struct Response {
 		ResponseType type;
@@ -259,6 +281,9 @@ namespace kyra {
 	Response make_code_response(const std::string& action,
 								const std::string& data = "",
 								int exit_code = -1);
+
+	Response make_frame_response(const std::string& action,
+								 const json& metadata = {});
 
 	json make_stream_start(void);
 

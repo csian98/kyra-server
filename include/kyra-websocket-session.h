@@ -36,6 +36,7 @@
 #include "kyra-session-hub.h"
 #include "kyra-code-session.h"
 #include "kyra-cron-handle.h"
+#include "kyra-frame-server.h"
 #include "kyra-protocol.h"
 #include "kyra-exception.h"
 #include "kyra-logger.h"
@@ -104,6 +105,9 @@ namespace kyra {
 		
 		void handle_code_request(const Request& request,
 								 SessionContext* ctx);
+
+		void handle_frame_request(const Request& request,
+								  SessionContext* ctx);
 		
 		void send(const json& payload);
 		
