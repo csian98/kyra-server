@@ -22,7 +22,8 @@
 
 #include "kyra-ollama-engine.h"
 #include "kyra-whisper-engine.h"
-#include "kyra-piper-engine.h"
+#include "kyra-supertonic-engine.h"
+// #include "kyra-piper-engine.h"
 
 #include "kyra-protocol.h"
 #include "kyra-exception.h"

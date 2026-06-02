@@ -54,6 +54,8 @@ namespace kyra {
 		virtual ~TTSEngine(void) noexcept = default;
 
 		virtual std::vector<uint8_t> synthesize(const std::string& text) = 0;
+
+		virtual int sample_rate(void) const noexcept { return 22050; }	// default piper
 	};
 }
 
@@ -61,7 +63,8 @@ namespace kyra {
 
 namespace kyra {
 	bool write_audio_data(const std::string& fname,
-						  const std::vector<uint8_t>& audio_data);
+						  const std::vector<uint8_t>& audio_data,
+						  int sample_rate = 22050);
 
 	std::string strip_markdown(const std::string& text);
 }
