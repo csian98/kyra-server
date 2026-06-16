@@ -66,13 +66,14 @@ Output:
 
 Kyra is designed to run using fully local AI components by default.
 
-| Component | Purpose                 |
-|-----------|-------------------------|
-| Ollama    | Local LLM Inference     |
-| Whisper   | Speech-To-Text          |
-| Piper     | Text-To-Speech          |
-| Qdrant    | Long-Term vector memory |
-| MaraiDB   | SYSTEM                  |
+| Component  | Purpose                    |
+|------------|----------------------------|
+| Ollama     | Local LLM Inference        |
+| Whisper    | Speech-To-Text             |
+| Piper      | Text-To-Speech (deprecate) |
+| Supertonic | Text-To-Speech             |
+| Qdrant     | Long-Term vector memory    |
+| MaraiDB    | SYSTEM                     |
 
 ### Required Services
 
