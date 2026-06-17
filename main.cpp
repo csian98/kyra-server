@@ -53,8 +53,23 @@ int main(int argc, char* argv[]) {
 		config.database = "kyra";
 		config.pool_size = 4;
 
+		// cron timezone resolver
+		auto cron_db = std::make_shared<kyra::DatabaseHandle>(config);
+		auto& cron = kyra::CronHandle::get_instance();
+		cron.set_timezone_resolver(
+			[cron_db](const std::string& username) -> std::optional<std::string> {
+				auto user = cron_db->find_user_by_username(username);
+				if (!user)
+					return std::nullopt;
+				auto profile = cron_db->find_profile_by_uid(user->id);
+				if (!profile || profile->time_zone.empty())
+					return std::nullopt;
+				return profile->time_zone;
+			});
+
 		// initialize
 		kyra::MemoryServer::get_instance().start();
+		kyra::FrameServer::get_instance().start();
 		kyra::CronHandle::get_instance().initialize("etc/cron/crontab");
 		kyra::CronHandle::get_instance().start();
 		kyra::SessionHub::get_instance().initialize(config);

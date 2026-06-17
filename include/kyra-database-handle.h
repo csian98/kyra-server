@@ -145,6 +145,8 @@ namespace kyra {
 
 		std::optional<UserSchema> find_user_by_token(const std::string& token);
 
+		std::optional<UserSchema> find_user_by_username(const std::string& username);
+
 		std::string recreate_user_token(uint64_t user_id);
 
 		bool update_user_role(uint64_t user_id, const std::string& role);

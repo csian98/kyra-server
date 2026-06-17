@@ -19,6 +19,8 @@
 #include <map>
 #include <set>
 #include <queue>
+#include <optional>
+#include <functional>
 
 #include <unistd.h>
 #include <sys/wait.h>
@@ -96,6 +98,8 @@ namespace kyra {
 
 		std::string text;
 
+		std::string timezone;	// IANA tz
+
 		time_point next_run;
 
 		int remain = -1;
@@ -111,11 +115,16 @@ namespace kyra {
 
 	class CronHandle {
 	public:
+		using TimezoneResolver =
+			std::function<std::optional<std::string>(const std::string& username)>;
+
 		static CronHandle& get_instance(void) noexcept;
 
 		CronHandle(const CronHandle&) = delete;
 
 		CronHandle& operator=(const CronHandle&) = delete;
+		
+		void set_timezone_resolver(TimezoneResolver resolver);
 
 		bool initialize(
 			const std::string& crontab_path,
@@ -147,13 +156,18 @@ namespace kyra {
 		bool persist_locked(void) const;
 
 		void execute_async(const CronTask& task) const;
+		
+		std::string resolve_timezone(const std::string& username) const;
 
 		time_point compute_next_run(const CronSchedule& schedule,
-									time_point from) const;
+									time_point from,
+									const std::string& timezone) const;
 
 		std::string crontab_path;
 
 		std::string request_binary;
+
+		TimezoneResolver tz_resolver;
 
 		mutable std::mutex mtx;
 
