@@ -274,6 +274,10 @@ namespace kyra {
 	Response make_chat_response(InputOutputFormat output_format,
 								const std::string& text);
 
+	Response make_chat_response(InputOutputFormat output_format,
+								const std::string& text,
+								std::vector<std::string> images);
+
 	Response make_file_response(const std::string& action,
 								const json& metadata = {},
 								std::vector<uint8_t> data = {});
@@ -288,6 +292,8 @@ namespace kyra {
 	json make_stream_start(void);
 
 	json make_stream_token(const std::string& token, bool thinking = false);
+
+	json make_stream_image(const std::string& image, const std::string& mime = "image/jpeg");
 
 	json make_stream_sentence_audio(const std::vector<uint8_t>& pcm);
 

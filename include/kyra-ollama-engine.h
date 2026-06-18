@@ -14,6 +14,8 @@
 
 #include <vector>
 #include <string>
+#include <set>
+#include <regex>
 
 #include <curl/curl.h>
 #include <nlohmann/json.hpp>
@@ -86,6 +88,13 @@ namespace kyra {
 			std::vector<Message>& messages) override;
 
 		json message_to_json(const Message& msg) const;
+
+		void process_tool_result(const json& result,
+								 std::string& text_out,
+								 std::vector<std::string>& images_out);
+
+		std::optional<std::pair<std::string, std::string>> fetch_image_as_base64(
+			const std::string& url);
 		
 		std::string http_get(const std::string& endpoint);
 		

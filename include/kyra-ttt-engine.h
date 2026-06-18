@@ -97,6 +97,8 @@ namespace kyra {
 										const float temperature = 0.8,
 										const bool think_deep = true);
 
+		std::vector<std::string> take_tool_images(void);	// most recent chat()/chat_stream()
+
 	protected:
 		virtual void truncate_messages(std::vector<Message>& messages);
 
@@ -105,6 +107,8 @@ namespace kyra {
 		std::shared_ptr<MCPEngine> mcp_engine;
 
 		json tools_format;
+
+		std::vector<std::string> tool_images;
 
 		int truncate_size = 25;
 	};
