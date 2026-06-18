@@ -173,6 +173,9 @@ namespace kyra {
 
 		std::optional<ProfileSchema> find_profile(uint64_t user_id);
 
+		std::shared_ptr<PreRetrieval> make_pre_retrieval(
+			const std::string& username);
+
 	    uint64_t register_session(
 			websocket::stream<beast::ssl_stream<tcp::socket>>* ws,
 			const UserSchema& user, const ProfileSchema& profile);
