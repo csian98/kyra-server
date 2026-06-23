@@ -116,10 +116,12 @@ namespace kyra {
 		websocket::stream<beast::ssl_stream<tcp::socket>> ws;
 		
 		uint64_t session_id = 0;
+
+		SessionContext* ctx = nullptr;
 		
 		std::queue<Request> queue;
 		
-		std::mutex write_mutex, queue_mutex, watchdog_mutex;
+		std::mutex queue_mutex, watchdog_mutex;
 		
 		std::condition_variable cv, watchdog_cv;
 		

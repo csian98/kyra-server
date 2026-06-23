@@ -128,6 +128,14 @@ namespace kyra {
 
 		websocket::stream<beast::ssl_stream<tcp::socket>>* ws = nullptr;
 
+		std::mutex write_mutex;
+
+		std::mutex memory_mutex;
+
+		std::atomic<bool> ready{false};
+
+		std::atomic<bool> alive{true};
+
 		InputOutputFormat input_format = InputOutputFormat::TEXT;
 
 		InputOutputFormat output_format = InputOutputFormat::TEXT;
@@ -159,6 +167,10 @@ namespace kyra {
 		bool is_ping_expired(
 			std::chrono::seconds timeout = std::chrono::seconds(60)
 			) const noexcept;
+
+		bool send(const json& payload);
+
+		bool send_binary(const std::vector<uint8_t>& data);
 	};
 	
 	class SessionHub {
@@ -210,7 +222,10 @@ namespace kyra {
 	private:
 		SessionHub(void) = default;
 
-		std::map<uint64_t, std::unique_ptr<SessionContext>> sessions;
+		std::vector<std::shared_ptr<SessionContext>> collect_targets(
+			const std::function<bool(const SessionContext&)>& pred);
+
+		std::map<uint64_t, std::shared_ptr<SessionContext>> sessions;
 
 		std::mutex mutex;
 
